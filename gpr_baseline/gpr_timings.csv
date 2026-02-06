@@ -1,0 +1,3 @@
+timestamp,experiment,operation,elapsed_seconds,n_folds,n_features,n_epochs
+2026-02-06T06:24:55.387198,loso_cv,loso_cv_total,3.6523417867720127,7,16,50
+2026-02-06T06:26:50.839137,spatial_cv,spatial_cv_total,2.780158231034875,5,16,50
