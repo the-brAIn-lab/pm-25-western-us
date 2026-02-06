@@ -1,0 +1,279 @@
+file,variable,description,units,source,frequency,notes
+pm_all,id,EPA Air Quality System site identifier,ID,EPA AQS,static,Links to monitoring station
+pm_all,date,Date of observation,YYYYMMDD,EPA AQS,daily,Integer format
+pm_all,smogP,Smog Potential - static layer predicting PM2.5 accumulation under stable conditions,probability (0-1),Derived (GBM model),static,Integration of pollution sources and topography
+pm_all,pm25,Fine particulate matter concentration (aerodynamic diameter <2.5 μm),μg/m³,EPA AQS,daily,Primary outcome variable
+pm_all,aot,Aerosol Optical Depth (infilled for missing data),unitless optical measure,MODIS MCD19A2 MAIAC,daily,Column-integrated PM extinction measure
+pm_all,aot_raw,Aerosol Optical Depth (raw without infilling),unitless optical measure,MODIS MCD19A2 MAIAC,daily,Original satellite retrieval
+pm_all,cld,Boundary Layer Cloud Cover,fraction,CFSR,daily,Lower cloud cover indicates stable conditions; r=-0.179 with winter PM2.5
+pm_all,hgt,Standardized Geopotential Height (700-mb),standardized,CFSR,daily,Higher pressure indicates stable conditions; r=0.211 with winter PM2.5
+pm_all,longwave,Upward Longwave Surface Radiation Flux,W/m²,CFSR,daily,Strong radiation supports inversions; r=0.182 with winter PM2.5
+pm_all,rh,2-meter Relative Humidity,percent,CFSR,daily,Lower humidity associated with PM accumulation; r=-0.185 with winter PM2.5
+pm_all,tmax,2-meter Maximum Temperature,°C or K,CFSR,daily,Relatively weak predictor; r=0.080 with winter PM2.5
+pm_all,wind,10-meter Wind Speed,m/s,CFSR,daily,Lower wind correlates with pollution trapping; r=-0.217 with winter PM2.5
+pm_all,cadI,Cold Air Drainage Intensity (daily smog intensity),index,Derived,daily,Captures temporal dynamics of stable atmospheric conditions
+pm_all,log_pm25,Natural log of PM2.5 concentration,log(μg/m³),Derived,daily,Log-transformed for modeling
+pm_all,cell,Grid cell identifier,ID,Derived,static,1-km grid cell reference
+pm_all,ID,Composite identifier (cell + date),ID,Derived,daily,Unique observation identifier
+pm_all,smogI,Smog Intensity - daily atmospheric stability measure,index,Derived from CFSR,daily,Same as cadI; meteorological interaction term
+pm_all,ll_id,Latitude-longitude identifier,ID,Derived,static,Links pm_all to pm_fixed; format: lon_lat
+pm_all,cluster,Spatial cluster identifier,ID,Derived,static,Geographic grouping
+pm_all,src,Data source indicator,code,Various,static,Indicates data provenance
+pm_all,n,Observation count,count,Derived,daily,Number of measurements aggregated
+pm_fixed,Unnamed: 0,Row index,ID,pandas,static,Artifact from CSV export
+pm_fixed,site.id,Monitoring site identifier,ID,EPA AQS,static,Format: c####
+pm_fixed,ll_id,Latitude-longitude identifier,ID,Derived,static,Links pm_fixed to pm_all
+pm_fixed,cell,Grid cell identifier,ID,Derived,static,1-km grid cell reference
+pm_fixed,lon,Longitude,decimal degrees,EPA AQS,static,WGS84 coordinate system
+pm_fixed,lat,Latitude,decimal degrees,EPA AQS,static,WGS84 coordinate system
+pm_fixed,cluster,Spatial cluster identifier,ID,Derived,static,Geographic grouping
+pm_fixed,min_d,Minimum distance to nearest neighbor,km or m,Derived,static,Spatial isolation measure
+pm_fixed,logpd2500g,Log population density (2.5km Gaussian smoothed),log(persons/km²),US Census 2010,static,Strongest predictor of winter PM2.5; r=0.722
+pm_fixed,geomorphic_protection_index_0p2,Morphometric Protection Index (2km radius),index,NED DEM,static,Measure of terrain openness
+pm_fixed,minf_700,Local minima function - vertical distance to lowest elevation within radius (700m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_1000,Local minima function - vertical distance to lowest elevation within radius (1000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_1500,Local minima function - vertical distance to lowest elevation within radius (1500m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_2500,Local minima function - vertical distance to lowest elevation within radius (2500m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_5000,Local minima function - vertical distance to lowest elevation within radius (5000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_7500,Local minima function - vertical distance to lowest elevation within radius (7500m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_10000,Local minima function - vertical distance to lowest elevation within radius (10000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_15000,Local minima function - vertical distance to lowest elevation within radius (15000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_20000,Local minima function - vertical distance to lowest elevation within radius (20000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_25000,Local minima function - vertical distance to lowest elevation within radius (25000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,minf_50000,Local minima function - vertical distance to lowest elevation within radius (50000m radius),meters,NED DEM,static,Negative values indicate valleys trap pollution; r=-0.499 to -0.605
+pm_fixed,sd50k,Standard deviation of elevation within 50km,meters,NED DEM,static,Terrain roughness measure
+pm_fixed,tpi_15000,Topographic Position Index - elevation relative to surroundings (15000m radius),meters,NED DEM,static,Valley/ridge position indicator
+pm_fixed,tpi_20000,Topographic Position Index - elevation relative to surroundings (20000m radius),meters,NED DEM,static,Valley/ridge position indicator
+pm_fixed,tpi_2500,Topographic Position Index - elevation relative to surroundings (2500m radius),meters,NED DEM,static,Valley/ridge position indicator
+pm_fixed,tpi_25000,Topographic Position Index - elevation relative to surroundings (25000m radius),meters,NED DEM,static,Valley/ridge position indicator
+pm_fixed,tpi_50000,Topographic Position Index - elevation relative to surroundings (50000m radius),meters,NED DEM,static,Valley/ridge position indicator
+pm_fixed,lst_day01,MODIS Land Surface Temperature daytime monthly normal (month 01),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day02,MODIS Land Surface Temperature daytime monthly normal (month 02),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day03,MODIS Land Surface Temperature daytime monthly normal (month 03),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day04,MODIS Land Surface Temperature daytime monthly normal (month 04),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day05,MODIS Land Surface Temperature daytime monthly normal (month 05),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day06,MODIS Land Surface Temperature daytime monthly normal (month 06),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day07,MODIS Land Surface Temperature daytime monthly normal (month 07),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day08,MODIS Land Surface Temperature daytime monthly normal (month 08),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day09,MODIS Land Surface Temperature daytime monthly normal (month 09),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day10,MODIS Land Surface Temperature daytime monthly normal (month 10),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day11,MODIS Land Surface Temperature daytime monthly normal (month 11),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_day12,MODIS Land Surface Temperature daytime monthly normal (month 12),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night01,MODIS Land Surface Temperature nighttime monthly normal (month 01),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night02,MODIS Land Surface Temperature nighttime monthly normal (month 02),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night03,MODIS Land Surface Temperature nighttime monthly normal (month 03),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night04,MODIS Land Surface Temperature nighttime monthly normal (month 04),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night05,MODIS Land Surface Temperature nighttime monthly normal (month 05),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night06,MODIS Land Surface Temperature nighttime monthly normal (month 06),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night07,MODIS Land Surface Temperature nighttime monthly normal (month 07),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night08,MODIS Land Surface Temperature nighttime monthly normal (month 08),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night09,MODIS Land Surface Temperature nighttime monthly normal (month 09),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night10,MODIS Land Surface Temperature nighttime monthly normal (month 10),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night11,MODIS Land Surface Temperature nighttime monthly normal (month 11),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,lst_night12,MODIS Land Surface Temperature nighttime monthly normal (month 12),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
+pm_fixed,cadP_p12_gbm_fit_040620,Cold Air Drainage Potential / Smog Potential (GBM model),probability (0-1),Derived (GBM),static,Same as smogP; gradient boosting machine prediction
+pm_fixed,airport_areas,Airport area within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,airport_points,Airport point count within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,class_1_railroad_miles,Class 1 railroad miles within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,class_2_and_3_railroad_miles,Class 2 and 3 railroad miles within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,commercial_land,Commercial land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,commercial_plus_industrial_plus_institutional,Commercial/industrial/institutional land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,commercial_plus_industrial,Commercial plus industrial land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,commercial_plus_institutional_land,Commercial plus institutional land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,commercial_plus_residential,Commercial plus residential land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,commercial_timber,Commercial timber area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,county_area,County area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,crop_land,Agricultural crop land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,drycleaners,Dry cleaner locations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,education,Educational facility count/area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,ertac_rail_yards,ERTAC rail yard locations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,extended_idle_locations,Extended idle truck locations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,exurban_housing,Exurban housing units,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,food._drug._chemical_industrial_ind3,Food/drug/chemical industrial area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,forest_land,Forest land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,gas_production_at_all_wells,Natural gas production at all wells,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,gas_production_at_cbm_wells,Gas production at coalbed methane wells,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,gas_production_at_gas_wells,Gas production at gas wells,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,gas_stations,Gas station count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,golf_courses,Golf course area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,great_lakes_tug_zone_area,Great Lakes tug zone area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,gulf_shipping_lanes,Gulf shipping lane area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,heavy_and_high_tech_industrial_ind1.ind5,Heavy and high-tech industrial area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,heavy_industrial_ind1,Heavy industrial area (r=0.345 with PM2.5),area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,high_intensity_residential,High intensity residential area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,hospital_com6,Hospital count/area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,housing_change,Housing unit change,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,housing,Housing unit count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,industrial_land,Industrial land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,industrial_plus_institutional_plus_hospitals,Industrial/institutional/hospital area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,intercity_bus_terminals,Intercity bus terminal count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,light_and_high_tech_industrial_ind2.ind5,Light and high-tech industrial area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,light_industrial_ind2,Light industrial area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,low_intensity_residential,Low intensity residential area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,marine_ports,Marine port area/count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,med_intensity_residential,Medium intensity residential area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,medical_office_clinic_com7,Medical office/clinic count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,metals_and_minerals_industrial_ind4,Metals and minerals industrial area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,military_airports,Military airport count/area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,mines,Mine locations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,navigable_waterway_activity,Navigable waterway activity,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,navigable_waterway_miles,Navigable waterway miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,ntad_amtrak_railroad_density,NTAD Amtrak railroad density,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,ntad_class_1_2_3_railroad_density,NTAD Class 1/2/3 railroad density,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,ntad_commuter_railroad_density,NTAD commuter railroad density,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,ntad_total_railroad_density,NTAD total railroad density,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,off.network_long.haul_trucks,Off-network long-haul truck activity (r=0.340 with PM2.5),area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,off.network_short.haul_trucks,Off-network short-haul truck activity,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,offshore_shipping_area,Offshore shipping area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,offshore_shipping_nei2011_nox,Offshore shipping NOx emissions (NEI 2011),area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,oil_and_gas_wells,Oil and gas well count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,oil_production_at_all_wells,Oil production at all wells,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,oil_production_at_gas_wells,Oil production at gas wells,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,oil_production_at_oil_wells,Oil production at oil wells,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,open_space,Open space area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,orchards_vineyards,Orchard and vineyard area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,pasture_land,Pasture land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,personal_repair_com3,Personal repair services,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,port_areas,Port area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,ports_nei2011_nox,Port NOx emissions (NEI 2011),area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,professional_technical_com4_plus_general_government_gov1,Professional/technical/government area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,quarries,Quarry locations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,refineries_and_tank_farms_and_gas_stations,Refineries/tank farms/gas stations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,refineries_and_tank_farms,Refinery and tank farm locations,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential_heating_coal,Residential coal heating,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential_heating_distillate_oil,Residential distillate oil heating,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential_heating_lp_gas,Residential LP gas heating,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential_heating_natural_gas,Residential natural gas heating,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential_heating_wood,Residential wood heating,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential_high_density,High density residential area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,residential.commercial.industrial.institutional.government,Combined developed land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,retail_trade_com1_plus_personal_repair_com3,Retail trade plus personal repair,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,retail_trade_com1,Retail trade area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,rural_housing,Rural housing units,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,rural_land_area,Rural land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,rural_population,Rural population count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,rural_primary_road_miles,Rural primary road miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,rural_secondary_road_miles,Rural secondary road miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,shipping_lanes,Shipping lane area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,single_family_residential,Single family residential area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,spud_count,Well spud count (new wells drilled),area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,strip_mines_quarries,Strip mine and quarry area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,suburban_housing,Suburban housing units,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,total_agriculture_without_orchards_vineyards,Total agriculture minus orchards/vineyards,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,total_agriculture,Total agricultural land area,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,total_railroad_miles,Total railroad miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,total_road_miles,Total road miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,transit_bus_terminals,Transit bus terminal count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,urban_housing,Urban housing units,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,urban_population,Urban population count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,urban_primary_plus_rural_primary,Urban plus rural primary road miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,urban_primary_road_miles,Urban primary road miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,urban_secondary_road_miles,Urban secondary road miles,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,wastewater_treatment_facilities,Wastewater treatment facility count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,well_count_all_wells,Total well count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,well_count_cbm_wells,Coalbed methane well count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,well_count_gas_wells,Gas well count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,well_count_oil_wells,Oil well count,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
+pm_fixed,epa.sum,Sum of EPA emission surrogates,composite,EPA SMOKE surrogates,static,Aggregated emission indicator
+pm_fixed,airport_areas_var2,Airport area within buffer (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,airport_points_var2,Airport point count within buffer (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,class_1_railroad_miles_var2,Class 1 railroad miles within buffer (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,class_2_and_3_railroad_miles_var2,Class 2 and 3 railroad miles within buffer (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,commercial_land_var2,Commercial land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,commercial_plus_industrial_plus_institutional_var2,Commercial/industrial/institutional land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,commercial_plus_industrial_var2,Commercial plus industrial land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,commercial_plus_institutional_land_var2,Commercial plus institutional land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,commercial_plus_residential_var2,Commercial plus residential land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,commercial_timber_var2,Commercial timber area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,county_area_var2,County area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,crop_land_var2,Agricultural crop land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,drycleaners_var2,Dry cleaner locations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,education_var2,Educational facility count/area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,ertac_rail_yards_var2,ERTAC rail yard locations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,extended_idle_locations_var2,Extended idle truck locations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,exurban_housing_var2,Exurban housing units (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,food._drug._chemical_industrial_ind3_var2,Food/drug/chemical industrial area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,forest_land_var2,Forest land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,gas_production_at_all_wells_var2,Natural gas production at all wells (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,gas_production_at_cbm_wells_var2,Gas production at coalbed methane wells (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,gas_production_at_gas_wells_var2,Gas production at gas wells (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,gas_stations_var2,Gas station count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,golf_courses_var2,Golf course area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,great_lakes_tug_zone_area_var2,Great Lakes tug zone area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,gulf_shipping_lanes_var2,Gulf shipping lane area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,heavy_and_high_tech_industrial_ind1.ind5_var2,Heavy and high-tech industrial area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,heavy_industrial_ind1_var2,Heavy industrial area (r=0.345 with PM2.5) (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,high_intensity_residential_var2,High intensity residential area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,hospital_com6_var2,Hospital count/area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,housing_change_var2,Housing unit change (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,housing_var2,Housing unit count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,industrial_land_var2,Industrial land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,industrial_plus_institutional_plus_hospitals_var2,Industrial/institutional/hospital area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,intercity_bus_terminals_var2,Intercity bus terminal count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,light_and_high_tech_industrial_ind2.ind5_var2,Light and high-tech industrial area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,light_industrial_ind2_var2,Light industrial area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,low_intensity_residential_var2,Low intensity residential area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,marine_ports_var2,Marine port area/count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,med_intensity_residential_var2,Medium intensity residential area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,medical_office_clinic_com7_var2,Medical office/clinic count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,metals_and_minerals_industrial_ind4_var2,Metals and minerals industrial area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,military_airports_var2,Military airport count/area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,mines_var2,Mine locations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,navigable_waterway_activity_var2,Navigable waterway activity (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,navigable_waterway_miles_var2,Navigable waterway miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,ntad_amtrak_railroad_density_var2,NTAD Amtrak railroad density (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,ntad_class_1_2_3_railroad_density_var2,NTAD Class 1/2/3 railroad density (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,ntad_commuter_railroad_density_var2,NTAD commuter railroad density (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,ntad_total_railroad_density_var2,NTAD total railroad density (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,off.network_long.haul_trucks_var2,Off-network long-haul truck activity (r=0.340 with PM2.5) (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,off.network_short.haul_trucks_var2,Off-network short-haul truck activity (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,offshore_shipping_area_var2,Offshore shipping area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,offshore_shipping_nei2011_nox_var2,Offshore shipping NOx emissions (NEI 2011) (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,oil_and_gas_wells_var2,Oil and gas well count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,oil_production_at_all_wells_var2,Oil production at all wells (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,oil_production_at_gas_wells_var2,Oil production at gas wells (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,oil_production_at_oil_wells_var2,Oil production at oil wells (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,open_space_var2,Open space area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,orchards_vineyards_var2,Orchard and vineyard area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,pasture_land_var2,Pasture land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,personal_repair_com3_var2,Personal repair services (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,port_areas_var2,Port area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,ports_nei2011_nox_var2,Port NOx emissions (NEI 2011) (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,professional_technical_com4_plus_general_government_gov1_var2,Professional/technical/government area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,quarries_var2,Quarry locations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,refineries_and_tank_farms_and_gas_stations_var2,Refineries/tank farms/gas stations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,refineries_and_tank_farms_var2,Refinery and tank farm locations (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential_heating_coal_var2,Residential coal heating (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential_heating_distillate_oil_var2,Residential distillate oil heating (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential_heating_lp_gas_var2,Residential LP gas heating (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential_heating_natural_gas_var2,Residential natural gas heating (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential_heating_wood_var2,Residential wood heating (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential_high_density_var2,High density residential area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,residential.commercial.industrial.institutional.government_var2,Combined developed land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,retail_trade_com1_plus_personal_repair_com3_var2,Retail trade plus personal repair (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,retail_trade_com1_var2,Retail trade area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,rural_housing_var2,Rural housing units (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,rural_land_area_var2,Rural land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,rural_population_var2,Rural population count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,rural_primary_road_miles_var2,Rural primary road miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,rural_secondary_road_miles_var2,Rural secondary road miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,shipping_lanes_var2,Shipping lane area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,single_family_residential_var2,Single family residential area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,spud_count_var2,Well spud count (new wells drilled) (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,strip_mines_quarries_var2,Strip mine and quarry area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,suburban_housing_var2,Suburban housing units (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,total_agriculture_without_orchards_vineyards_var2,Total agriculture minus orchards/vineyards (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,total_agriculture_var2,Total agricultural land area (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,total_railroad_miles_var2,Total railroad miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,total_road_miles_var2,Total road miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,transit_bus_terminals_var2,Transit bus terminal count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,urban_housing_var2,Urban housing units (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,urban_population_var2,Urban population count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,urban_primary_plus_rural_primary_var2,Urban plus rural primary road miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,urban_primary_road_miles_var2,Urban primary road miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,urban_secondary_road_miles_var2,Urban secondary road miles (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,wastewater_treatment_facilities_var2,Wastewater treatment facility count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,well_count_all_wells_var2,Total well count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,well_count_cbm_wells_var2,Coalbed methane well count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,well_count_gas_wells_var2,Gas well count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
+pm_fixed,well_count_oil_wells_var2,Oil well count (spatial variance),area/count/activity units,EPA SMOKE surrogates,static,Variance at alternative spatial scale
