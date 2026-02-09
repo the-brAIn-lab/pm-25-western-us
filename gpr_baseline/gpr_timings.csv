@@ -1,5 +1,0 @@
-timestamp,experiment,operation,elapsed_seconds,n_folds,n_features,n_epochs,n_train,kernel,n_test,batch_size
-2026-02-06T06:24:55.387198,loso_cv,loso_cv_total,3.6523417867720127,7.0,16,50.0,,,,
-2026-02-06T06:26:50.839137,spatial_cv,spatial_cv_total,2.780158231034875,5.0,16,50.0,,,,
-2026-02-06T06:34:55.172109,baseline_random_split,training,0.6177454330027103,,16,100.0,393.0,RBF_ARD,,
-2026-02-06T06:34:55.944326,baseline_random_split,inference,0.004354454576969147,,16,,393.0,,99.0,500.0
