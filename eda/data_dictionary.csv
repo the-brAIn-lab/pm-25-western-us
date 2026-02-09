@@ -1,7 +1,7 @@
 file,variable,description,units,source,frequency,notes
 pm_all,id,EPA Air Quality System site identifier,ID,EPA AQS,static,Links to monitoring station
 pm_all,date,Date of observation,YYYYMMDD,EPA AQS,daily,Integer format
-pm_all,smogP,Smog Potential - static layer predicting PM2.5 accumulation under stable conditions,probability (0-1),Derived (GBM model),static,Integration of pollution sources and topography
+pm_all,smogP,Smog Potential - static layer predicting PM2.5 accumulation under stable conditions,probability (0-1),Derived,static,GBM model; integration of pollution sources and topography
 pm_all,pm25,Fine particulate matter concentration (aerodynamic diameter <2.5 μm),μg/m³,EPA AQS,daily,Primary outcome variable
 pm_all,aot,Aerosol Optical Depth (infilled for missing data),unitless optical measure,MODIS MCD19A2 MAIAC,daily,Column-integrated PM extinction measure
 pm_all,aot_raw,Aerosol Optical Depth (raw without infilling),unitless optical measure,MODIS MCD19A2 MAIAC,daily,Original satellite retrieval
@@ -15,7 +15,7 @@ pm_all,cadI,Cold Air Drainage Intensity (daily smog intensity),index,Derived,dai
 pm_all,log_pm25,Natural log of PM2.5 concentration,log(μg/m³),Derived,daily,Log-transformed for modeling
 pm_all,cell,Grid cell identifier,ID,Derived,static,1-km grid cell reference
 pm_all,ID,Composite identifier (cell + date),ID,Derived,daily,Unique observation identifier
-pm_all,smogI,Smog Intensity - daily atmospheric stability measure,index,Derived from CFSR,daily,Same as cadI; meteorological interaction term
+pm_all,smogI,Smog Intensity - daily atmospheric stability measure,index,Derived,daily,Derived from CFSR variables; same as cadI; meteorological interaction term
 pm_all,ll_id,Latitude-longitude identifier,ID,Derived,static,Links pm_all to pm_fixed; format: lon_lat
 pm_all,cluster,Spatial cluster identifier,ID,Derived,static,Geographic grouping
 pm_all,src,Data source indicator,code,Various,static,Indicates data provenance
@@ -71,7 +71,7 @@ pm_fixed,lst_night09,MODIS Land Surface Temperature nighttime monthly normal (mo
 pm_fixed,lst_night10,MODIS Land Surface Temperature nighttime monthly normal (month 10),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
 pm_fixed,lst_night11,MODIS Land Surface Temperature nighttime monthly normal (month 11),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
 pm_fixed,lst_night12,MODIS Land Surface Temperature nighttime monthly normal (month 12),°C or K,MODIS LST 2003-2012,monthly climatology,Month indicated by suffix (01-12)
-pm_fixed,cadP_p12_gbm_fit_040620,Cold Air Drainage Potential / Smog Potential (GBM model),probability (0-1),Derived (GBM),static,Same as smogP; gradient boosting machine prediction
+pm_fixed,cadP_p12_gbm_fit_040620,Cold Air Drainage Potential / Smog Potential (GBM model),probability (0-1),Derived,static,GBM prediction; same as smogP; gradient boosting machine prediction
 pm_fixed,airport_areas,Airport area within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
 pm_fixed,airport_points,Airport point count within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
 pm_fixed,class_1_railroad_miles,Class 1 railroad miles within buffer,area/count/activity units,EPA SMOKE surrogates,static,EPA SMOKE emission surrogate
