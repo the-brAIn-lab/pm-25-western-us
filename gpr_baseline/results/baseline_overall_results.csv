@@ -1,2 +1,0 @@
-cv_method,n_train,n_test,n_predictions,rmse_log,mae_log,r2_log,rmse_orig,mae_orig,r2_orig,total_time_seconds
-Random_Split,2000,1511,1511,0.4404,0.3401,0.6114,3.65,2.27,0.5158,3.127
