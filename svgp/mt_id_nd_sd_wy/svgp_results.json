@@ -1,0 +1,90 @@
+{
+  "config": {
+    "inducing_list": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "n_epochs": 50,
+    "batch_size": 2048,
+    "patience": 15,
+    "lr": 0.01,
+    "states": [
+      "MT",
+      "ID",
+      "ND",
+      "SD",
+      "WY"
+    ],
+    "n_gpus": 4,
+    "training": "svgp_minibatch"
+  },
+  "summary": [
+    {
+      "n_inducing": 128,
+      "rmse_log": 0.5396053254228089,
+      "mae_log": 0.4162294255026981,
+      "r2_log": 0.4142789957019526,
+      "rmse_orig": 4.589985433215562,
+      "mae_orig": 2.658478461300634,
+      "r2_orig": 0.43834164068038894,
+      "mean_train_time": 107.2510791149772,
+      "mean_infer_time": 0.030861547894476513,
+      "mean_ip_time": 11.073430439503031,
+      "mean_fold_time": 118.35537110237472,
+      "total_wall_time": 13255.801563465968,
+      "mean_stopped_epoch": 50.0,
+      "n_predictions": 48852
+    },
+    {
+      "n_inducing": 256,
+      "rmse_log": 0.5575784594298245,
+      "mae_log": 0.4301601307331406,
+      "r2_log": 0.37461088312106317,
+      "rmse_orig": 4.703323751972694,
+      "mae_orig": 2.7644623551735164,
+      "r2_orig": 0.4102616625777311,
+      "mean_train_time": 105.76947061266817,
+      "mean_infer_time": 0.030169089798749025,
+      "mean_ip_time": 18.255460259234365,
+      "mean_fold_time": 124.05509996170129,
+      "total_wall_time": 13894.171195710544,
+      "mean_stopped_epoch": 50.0,
+      "n_predictions": 48852
+    },
+    {
+      "n_inducing": 512,
+      "rmse_log": 0.585005575028095,
+      "mae_log": 0.44926027722401324,
+      "r2_log": 0.311572272544397,
+      "rmse_orig": 4.970241981434671,
+      "mae_orig": 2.9302212162721735,
+      "r2_orig": 0.34142585134243875,
+      "mean_train_time": 110.98224102361876,
+      "mean_infer_time": 0.035141164981593774,
+      "mean_ip_time": 34.97664830689401,
+      "mean_fold_time": 145.99403049549437,
+      "total_wall_time": 16351.33141549537,
+      "mean_stopped_epoch": 50.0,
+      "n_predictions": 48852
+    },
+    {
+      "n_inducing": 1024,
+      "rmse_log": 0.5983340642671866,
+      "mae_log": 0.45832992423168006,
+      "r2_log": 0.27984529636815325,
+      "rmse_orig": 5.100806804090663,
+      "mae_orig": 3.0084108331256147,
+      "r2_orig": 0.3063708090496403,
+      "mean_train_time": 145.3803527530607,
+      "mean_infer_time": 0.040231542354117016,
+      "mean_ip_time": 65.71673708544196,
+      "mean_fold_time": 211.13732138085678,
+      "total_wall_time": 23647.37999465596,
+      "mean_stopped_epoch": 50.0,
+      "n_predictions": 48852
+    }
+  ],
+  "total_cv_time": 17054.457672780845
+}
