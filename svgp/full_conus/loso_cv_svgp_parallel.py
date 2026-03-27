@@ -7,6 +7,7 @@ Sweeps over higher inducing point counts for the larger dataset.
 
 Usage:
   python loso_cv_svgp_parallel.py [--n_inducing 256,512,1024,2048] [--n_epochs 50] [--batch_size 4096]
+  python loso_cv_svgp_parallel.py --states MT,ID,WY --n_sites 20
 """
 import sys
 sys.path.insert(0, '../..')
@@ -293,7 +294,7 @@ def run_fold(args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--n_gpus', type=int, default=8)
-    parser.add_argument('--n_inducing', type=str, default='256,512,1024,2048',
+    parser.add_argument('--n_inducing', type=str, default='256,512,1024,2048,4096',
                         help='Comma-separated list of inducing point counts to sweep')
     parser.add_argument('--n_epochs', type=int, default=50)
     parser.add_argument('--batch_size', type=int, default=4096)
@@ -301,13 +302,16 @@ def main():
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--n_sites', type=int, default=N_LOSO_SITES,
                         help='Number of random sites for LOSO evaluation')
+    parser.add_argument('--states', type=str, default=None,
+                        help='Comma-separated list of state abbreviations to sample LOSO sites from (e.g. MT,ID,WY). If omitted, samples from all states.')
     args = parser.parse_args()
 
     inducing_list = [int(x) for x in args.n_inducing.split(',')]
 
     print(f"Configuration: n_gpus={args.n_gpus}, n_epochs={args.n_epochs}, "
           f"batch_size={args.batch_size}, patience={args.patience}, lr={args.lr}")
-    print(f"Full CONUS dataset — {args.n_sites} random LOSO sites")
+    states_desc = args.states if args.states else 'all'
+    print(f"Full CONUS dataset — {args.n_sites} random LOSO sites (states: {states_desc})")
     print(f"Inducing point sweep: {inducing_list}")
     print(f"Available CUDA devices: {torch.cuda.device_count()}")
 
@@ -354,12 +358,26 @@ def main():
     print(f"\n{len(df_clean):,} observations after dropna, {len(all_sites)} sites")
     print(f"Features ({len(feature_cols)}): {feature_cols}")
 
+    # Filter sites by state if specified
+    if args.states:
+        selected_states = [s.strip().upper() for s in args.states.split(',')]
+        eligible_sites = np.array([s for s in all_sites if site_state_map.get(s, 'UNK') in selected_states])
+        print(f"\nFiltering to states: {selected_states} → {len(eligible_sites)} eligible sites")
+        if len(eligible_sites) < args.n_sites:
+            print(f"  WARNING: only {len(eligible_sites)} sites available in {selected_states}, "
+                  f"using all of them instead of {args.n_sites}")
+            args.n_sites = len(eligible_sites)
+    else:
+        eligible_sites = all_sites
+        selected_states = None
+
     # Randomly select LOSO sites
     rng = np.random.RandomState(42)
-    loso_sites = rng.choice(all_sites, size=args.n_sites, replace=False)
+    loso_sites = rng.choice(eligible_sites, size=args.n_sites, replace=False)
     loso_site_states = {s: site_state_map.get(s, 'UNK') for s in loso_sites}
 
-    print(f"\nSelected {args.n_sites} LOSO sites:")
+    state_label = ','.join(selected_states) if selected_states else 'all'
+    print(f"\nSelected {args.n_sites} LOSO sites (from {state_label}):")
     for s in loso_sites:
         n_obs = (df_clean['ll_id'] == s).sum()
         st = loso_site_states[s]
@@ -598,6 +616,7 @@ def main():
             'n_gpus': n_gpus,
             'n_total_obs': len(df_clean),
             'n_total_sites': len(all_sites),
+            'states_filter': args.states,
             'training': 'svgp_minibatch_full_conus',
         },
         'summary': summary_rows,
