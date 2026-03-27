@@ -160,7 +160,11 @@ def run_fold(args):
 
         # Training loop
         losses = []
+        smoothed_losses = []
+        epoch_times = []
+        batch_time_stats = []  # per-epoch: mean, min, max, count
         best_smoothed = float('inf')
+        best_epoch = 0
         best_state = None
         best_lik_state = None
         patience_counter = 0
@@ -170,12 +174,15 @@ def run_fold(args):
         train_start = time.perf_counter()
 
         for epoch in range(n_epochs):
+            epoch_start = time.perf_counter()
             model.train()
             likelihood.train()
             epoch_loss = 0.0
             n_batches = 0
+            batch_times = []
 
             for batch_x, batch_y in train_loader:
+                batch_start = time.perf_counter()
                 batch_x = batch_x.to(device, non_blocking=True)
                 batch_y = batch_y.to(device, non_blocking=True)
 
@@ -187,14 +194,26 @@ def run_fold(args):
 
                 epoch_loss += loss.item()
                 n_batches += 1
+                batch_times.append(time.perf_counter() - batch_start)
 
             avg_loss = epoch_loss / n_batches
             losses.append(avg_loss)
 
+            epoch_elapsed = time.perf_counter() - epoch_start
+            epoch_times.append(epoch_elapsed)
+            batch_time_stats.append({
+                'mean': float(np.mean(batch_times)),
+                'min': float(np.min(batch_times)),
+                'max': float(np.max(batch_times)),
+                'n_batches': n_batches,
+            })
+
             smoothed_loss = avg_loss if smoothed_loss is None else 0.9 * smoothed_loss + 0.1 * avg_loss
+            smoothed_losses.append(smoothed_loss)
 
             if smoothed_loss < best_smoothed:
                 best_smoothed = smoothed_loss
+                best_epoch = epoch
                 best_state = {k: v.clone() for k, v in model.state_dict().items()}
                 best_lik_state = {k: v.clone() for k, v in likelihood.state_dict().items()}
                 patience_counter = 0
@@ -254,6 +273,7 @@ def run_fold(args):
             'pred_mean': pred_mean.tolist(),
             'pred_var': pred_var.tolist(),
             'losses': losses,
+            'smoothed_losses': smoothed_losses,
             'params': params,
             'metrics': {
                 'rmse_log': rmse_log,
@@ -269,6 +289,9 @@ def run_fold(args):
                 'infer_time': infer_time,
                 'total_fold_time': ip_time + train_time + infer_time,
                 'stopped_epoch': stopped_epoch,
+                'best_epoch': best_epoch,
+                'epoch_times': epoch_times,
+                'batch_time_stats': batch_time_stats,
             },
         })
 
