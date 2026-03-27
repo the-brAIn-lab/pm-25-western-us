@@ -104,7 +104,7 @@ def select_inducing_points(X_train, n_inducing, method='kmeans'):
 def run_fold(args):
     """Run a single LOSO fold with SVGP for multiple inducing point counts."""
     (fold_idx, held_out_site, held_out_state, X_train, y_train_raw, X_test, y_test_raw,
-     base_indices, aot_idx, smogI_idx, smogP_idx, doy_idx,
+     test_dates, base_indices, aot_idx, smogI_idx, smogP_idx, doy_idx,
      inducing_list, n_epochs, batch_size, gpu_id, patience, lr) = args
 
     device = torch.device(f'cuda:{gpu_id}')
@@ -309,6 +309,8 @@ def run_fold(args):
         'n_test': len(y_test),
         'y_test': y_test.tolist(),
         'y_test_raw': y_test_raw.tolist(),
+        'test_dates': test_dates.tolist(),
+        'test_features': X_test.tolist(),
         'inducing_results': inducing_results,
         'gpu_id': gpu_id,
     }
@@ -428,11 +430,12 @@ def main():
         y_train_raw = train_df['pm25'].values
         X_test = test_df[feature_cols].values
         y_test_raw = test_df['pm25'].values
+        test_dates = test_df['date'].dt.strftime('%Y%m%d').values
         gpu_id = i % n_gpus
 
         fold_args.append((
             i, held_out_site, loso_site_states[held_out_site],
-            X_train, y_train_raw, X_test, y_test_raw,
+            X_train, y_train_raw, X_test, y_test_raw, test_dates,
             base_indices, aot_idx, smogI_idx, smogP_idx, doy_idx,
             inducing_list, args.n_epochs, args.batch_size, gpu_id,
             args.patience, args.lr
@@ -607,6 +610,8 @@ def main():
         all_actuals_ind = []
         all_vars_ind = []
         all_sites_ind = []
+        all_dates_ind = []
+        all_features_ind = []
         for r in results:
             y_test = np.array(r['y_test'])
             for ir in r['inducing_results']:
@@ -615,15 +620,21 @@ def main():
                     all_actuals_ind.append(y_test)
                     all_vars_ind.append(np.array(ir['pred_var']))
                     all_sites_ind.extend([r['site']] * len(y_test))
+                    all_dates_ind.extend(r['test_dates'])
+                    all_features_ind.append(np.array(r['test_features']))
         preds_ind = np.concatenate(all_preds_ind)
         actuals_ind = np.concatenate(all_actuals_ind)
         vars_ind = np.concatenate(all_vars_ind)
+        features_ind = np.concatenate(all_features_ind)
         np.savez(f'svgp_predictions_M{n_ind}.npz',
                  predictions=preds_ind, actuals=actuals_ind,
                  pred_var=vars_ind,
                  pred_pm25=np.exp(preds_ind) - 1,
                  actual_pm25=np.exp(actuals_ind) - 1,
-                 sites=np.array(all_sites_ind))
+                 sites=np.array(all_sites_ind),
+                 dates=np.array(all_dates_ind),
+                 features=features_ind,
+                 feature_names=np.array(feature_cols))
 
     # Save full results JSON
     output = {
