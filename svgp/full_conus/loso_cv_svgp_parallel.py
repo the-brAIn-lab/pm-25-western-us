@@ -477,7 +477,9 @@ def main():
                       f"R²={r2:.3f} (M={best['n_inducing']}), "
                       f"epochs={ep}, train={tt:.1f}s")
             except Exception as e:
-                print(f"  Fold for site {site} FAILED: {e}")
+                import traceback
+                print(f"  Fold for site {site} FAILED: {type(e).__name__}: {e}")
+                traceback.print_exc()
 
     cv_total_time = time.perf_counter() - cv_start
     print(f"\nTotal CV time: {cv_total_time:.1f}s ({cv_total_time/60:.1f} min)")
