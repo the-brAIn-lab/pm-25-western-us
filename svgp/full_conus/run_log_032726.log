@@ -1,0 +1,47 @@
+Configuration: n_gpus=4, n_epochs=50, batch_size=4096, patience=15, lr=0.01
+Full CONUS dataset — 20 random LOSO sites (states: MT,ID,WY,ND,SD)
+Inducing point sweep: [256, 512, 1024, 2048, 4096]
+Available CUDA devices: 4
+Using 4 GPUs
+
+Loading full dataset...
+  Loaded 2,077,111 observations in 7.9s
+
+1,883,144 observations after dropna, 932 sites
+Features (17): ['aot', 'wind', 'hgt', 'cld', 'longwave', 'rh', 'tmax', 'smogI', 'smogP', 'lat', 'lon', 'logpd2500g', 'minf_5000', 'sd50k', 'heavy_industrial_ind1', 'housing', 'day_of_year']
+
+Filtering to states: ['MT', 'ID', 'WY', 'ND', 'SD'] → 186 eligible sites
+
+Selected 20 LOSO sites (from MT,ID,WY,ND,SD):
+  111987_46850 (MT): 3,703 observations
+  116979_44262 (ID): 381 observations
+  116359_48894 (ID): 319 observations
+  105540_44503 (WY): 2,805 observations
+  111303_47494 (MT): 4,506 observations
+  111712_46826 (MT): 1,762 observations
+  103514_46950 (ND): 329 observations
+  112046_43465 (ID): 2,033 observations
+  105504_44266 (WY): 371 observations
+  109530_41556 (WY): 288 observations
+  105236_43677 (WY): 553 observations
+  111092_44658 (MT): 5,725 observations
+  104192_43873 (WY): 707 observations
+  109761_41589 (WY): 136 observations
+  113886_46881 (MT): 182 observations
+  115553_48392 (MT): 5,747 observations
+  107862_48318 (MT): 3,094 observations
+  106950_44797 (WY): 281 observations
+  116806_46397 (ID): 1,989 observations
+  114001_45860 (MT): 1,766 observations
+  Saved to loso_sites.csv
+
+Launching 20 folds across 4 GPUs...
+Each fold trains 5 SVGP models (inducing sweep)
+~1,883,144 training points per fold
+  Fold for site 111987_46850 FAILED: 
+  Fold for site 116979_44262 FAILED: 
+  Fold for site 116359_48894 FAILED: 
+  Fold for site 105540_44503 FAILED: 
+  Fold for site 111303_47494 FAILED: 
+  Fold for site 111712_46826 FAILED: 
+  Fold for site 103514_46950 FAILED: 
