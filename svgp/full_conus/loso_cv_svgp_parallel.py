@@ -103,8 +103,7 @@ def select_inducing_points(X_train, n_inducing, method='kmeans'):
 
 def run_fold(args):
     """Run a single LOSO fold with SVGP for multiple inducing point counts."""
-    (fold_idx, held_out_site, held_out_state, X_train, y_train_raw, X_test, y_test_raw,
-     test_dates, base_indices, aot_idx, smogI_idx, smogP_idx, doy_idx,
+    (fold_idx, held_out_site, held_out_state, data_path, feature_cols, base_indices, aot_idx, smogI_idx, smogP_idx, doy_idx,
      inducing_list, n_epochs, batch_size, gpu_id, patience, lr) = args
 
     device = torch.device(f'cuda:{gpu_id}')
@@ -348,7 +347,7 @@ def main():
     load_start = time.perf_counter()
     pm_all = pd.read_csv("../../data/pm25_data_complete_2003_2021_smogI_tmax_corrected_032726.csv",
                          low_memory=False)
-    pm_fixed = pd.read_csv('../../eda/pm25_locs_with_states.csv')
+    pm_fixed = pd.read_csv('../../data/pm25_locs_with_states.csv')
     load_time = time.perf_counter() - load_start
     print(f"  Loaded {len(pm_all):,} observations in {load_time:.1f}s")
 
@@ -375,6 +374,10 @@ def main():
     base_indices = [i for i, f in enumerate(feature_cols) if f not in seasonal_interaction_features]
 
     df_clean = df.dropna(subset=feature_cols + ['pm25']).copy()
+
+    # save data to parquet
+    data_path = 'loso_temp_data.parquet'
+    df_clean.to_parquet(data_path)
 
     # Build site-to-state mapping
     site_state_map = df_clean.groupby('ll_id')['state'].first().to_dict()
@@ -435,7 +438,7 @@ def main():
 
         fold_args.append((
             i, held_out_site, loso_site_states[held_out_site],
-            X_train, y_train_raw, X_test, y_test_raw, test_dates,
+            data_path, feature_cols,
             base_indices, aot_idx, smogI_idx, smogP_idx, doy_idx,
             inducing_list, args.n_epochs, args.batch_size, gpu_id,
             args.patience, args.lr
