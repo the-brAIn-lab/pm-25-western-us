@@ -357,9 +357,20 @@ def main():
 
     # Load data — full CONUS, all years
     data_path = 'loso_temp_data.parquet'
+
+    # make module level constants?
+    time_varying_features = ['aot', 'wind', 'hgt', 'cld', 'longwave', 'rh', 'tmax', 'smogI', 'smogP']
+    static_features = ['lat', 'lon', 'logpd2500g', 'minf_5000', 'sd50k',
+                           'heavy_industrial_ind1', 'housing']
+
     if (os.path.exists(data_path)):
+
         print("\nLoading cached dataset...")
         df_clean = pd.read_parquet(data_path)
+        
+        feature_cols = [f for f in time_varying_features if f in df_clean.columns] \
+                     + [f for f in static_features if f in df_clean.columns] \
+                     + ['day_of_year']
     else:
         print("\nLoading full dataset...")
         load_start = time.perf_counter()
@@ -371,10 +382,6 @@ def main():
 
         pm_all['date'] = pd.to_datetime(pm_all['date'], format='%Y%m%d')
 
-        time_varying_features = ['aot', 'wind', 'hgt', 'cld', 'longwave', 'rh', 'tmax', 'smogI', 'smogP']
-        static_features = ['lat', 'lon', 'logpd2500g', 'minf_5000', 'sd50k',
-                        'heavy_industrial_ind1', 'housing']
-
         available_tv = [f for f in time_varying_features if f in pm_all.columns]
         available_static = [f for f in static_features if f in pm_fixed.columns]
 
@@ -384,17 +391,19 @@ def main():
         df['day_of_year'] = df['date'].dt.dayofyear
 
         feature_cols = available_tv + available_static + ['day_of_year']
-        aot_idx = feature_cols.index('aot')
-        smogI_idx = feature_cols.index('smogI')
-        smogP_idx = feature_cols.index('smogP')
-        doy_idx = feature_cols.index('day_of_year')
-        seasonal_interaction_features = {'aot', 'smogI', 'smogP', 'day_of_year'}
-        base_indices = [i for i, f in enumerate(feature_cols) if f not in seasonal_interaction_features]
-
+        
         df_clean = df.dropna(subset=feature_cols + ['pm25']).copy()
 
         # save data to parquet
         df_clean.to_parquet(data_path)
+
+    # save feature indices
+    aot_idx = feature_cols.index('aot')
+    smogI_idx = feature_cols.index('smogI')
+    smogP_idx = feature_cols.index('smogP')
+    doy_idx = feature_cols.index('day_of_year')
+    seasonal_interaction_features = {'aot', 'smogI', 'smogP', 'day_of_year'}
+    base_indices = [i for i, f in enumerate(feature_cols) if f not in seasonal_interaction_features]
 
     # Build site-to-state mapping
     site_state_map = df_clean.groupby('ll_id')['state'].first().to_dict()
