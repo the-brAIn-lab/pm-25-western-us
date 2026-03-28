@@ -333,7 +333,7 @@ def main():
     parser.add_argument('--n_inducing', type=str, default='256,512,1024,2048,4096',
                         help='Comma-separated list of inducing point counts to sweep')
     parser.add_argument('--n_epochs', type=int, default=50)
-    parser.add_argument('--batch_size', type=int, default=4096)
+    parser.add_argument('--batch_size', type=int, default=65536)
     parser.add_argument('--patience', type=int, default=15)
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--n_sites', type=int, default=N_LOSO_SITES,
