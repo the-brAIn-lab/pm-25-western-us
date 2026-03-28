@@ -346,7 +346,7 @@ def main():
     # Load data — full CONUS, all years
     print("\nLoading full dataset...")
     load_start = time.perf_counter()
-    pm_all = pd.read_csv("../../data/pm25_data_complete_2003_2021_smogI_031026.csv",
+    pm_all = pd.read_csv("../../data/pm25_data_complete_2003_2021_smogI_tmax_corrected_032726.csv",
                          low_memory=False)
     pm_fixed = pd.read_csv('../../eda/pm25_locs_with_states.csv')
     load_time = time.perf_counter() - load_start
