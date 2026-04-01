@@ -1,0 +1,113 @@
+Run tag: 033026_1
+Configuration: n_gpus=4, workers_per_gpu=1, n_epochs=50, batch_size=32768, patience=15, lr=0.01
+Full CONUS dataset — 5 random LOSO sites (states: MT)
+Inducing point sweep: [256, 512, 1024, 2048, 4096]
+Available CUDA devices: 4
+Using 4 GPUs
+
+Loading cached dataset...
+
+1,883,144 observations after dropna, 932 sites
+Features (17): ['aot', 'wind', 'hgt', 'cld', 'longwave', 'rh', 'tmax', 'smogI', 'smogP', 'lat', 'lon', 'logpd2500g', 'minf_5000', 'sd50k', 'heavy_industrial_ind1', 'housing', 'day_of_year']
+
+Filtering to states: ['MT'] → 56 eligible sites
+
+Selected 5 LOSO sites (from MT):
+  108720_47582 (MT): 1,999 observations
+  115553_48392 (MT): 5,747 observations
+  108512_45780 (MT): 3,338 observations
+  105103_48308 (MT): 1,834 observations
+  112501_46003 (MT): 4,911 observations
+  Saved to runs/033026_1/loso_sites.csv
+
+Launching 5 folds across 4 GPUs...
+Each fold trains 5 SVGP models (inducing sweep)
+~1,883,144 training points per fold
+
+  Fold  0 complete (GPU 0) [MT] site=108720_47582 (n_train=1,881,145, n_test=1,999) [472.5min elapsed]
+    M=  256: R²_log=0.309 RMSE_log=0.4550 R²_orig=0.376 RMSE_orig=2.97 | epochs=50 train=1341.2s
+    M=  512: R²_log=0.349 RMSE_log=0.4415 R²_orig=0.382 RMSE_orig=2.96 | epochs=50 train=1556.7s
+    M= 1024: R²_log=0.484 RMSE_log=0.3931 R²_orig=0.398 RMSE_orig=2.92 | epochs=50 train=2386.9s
+    M= 2048: R²_log=0.448 RMSE_log=0.4066 R²_orig=0.355 RMSE_orig=3.02 | epochs=50 train=5316.2s
+    M= 4096: R²_log=0.474 RMSE_log=0.3970 R²_orig=0.410 RMSE_orig=2.89 | epochs=50 train=17492.1s
+    Params (M=4096): base=0.138 summer=0.488 winter=0.440 seasonal=0.635 noise=0.1894
+    Periods: aot=485.9d smog=502.9d resid=380.4d
+
+  Fold  1 complete (GPU 1) [MT] site=115553_48392 (n_train=1,877,397, n_test=5,747) [475.2min elapsed]
+    M=  256: R²_log=0.400 RMSE_log=0.5051 R²_orig=0.347 RMSE_orig=8.34 | epochs=50 train=1332.6s
+    M=  512: R²_log=0.413 RMSE_log=0.4997 R²_orig=0.364 RMSE_orig=8.23 | epochs=50 train=1512.2s
+    M= 1024: R²_log=0.361 RMSE_log=0.5213 R²_orig=0.273 RMSE_orig=8.80 | epochs=50 train=2348.7s
+    M= 2048: R²_log=0.420 RMSE_log=0.4965 R²_orig=0.341 RMSE_orig=8.38 | epochs=50 train=5366.4s
+    M= 4096: R²_log=0.431 RMSE_log=0.4917 R²_orig=0.352 RMSE_orig=8.31 | epochs=50 train=17673.8s
+    Params (M=4096): base=0.136 summer=0.513 winter=0.432 seasonal=0.653 noise=0.1904
+    Periods: aot=485.8d smog=510.7d resid=382.1d
+
+  Fold  2 complete (GPU 2) [MT] site=108512_45780 (n_train=1,879,806, n_test=3,338) [475.2min elapsed]
+    M=  256: R²_log=0.189 RMSE_log=0.6133 R²_orig=0.277 RMSE_orig=3.84 | epochs=50 train=1370.9s
+    M=  512: R²_log=0.030 RMSE_log=0.6709 R²_orig=0.197 RMSE_orig=4.04 | epochs=50 train=1502.6s
+    M= 1024: R²_log=-0.168 RMSE_log=0.7361 R²_orig=-0.006 RMSE_orig=4.53 | epochs=50 train=2334.7s
+    M= 2048: R²_log=-0.137 RMSE_log=0.7262 R²_orig=0.045 RMSE_orig=4.41 | epochs=50 train=5321.0s
+    M= 4096: R²_log=-0.180 RMSE_log=0.7399 R²_orig=0.039 RMSE_orig=4.43 | epochs=50 train=17417.2s
+    Params (M=4096): base=0.137 summer=0.508 winter=0.428 seasonal=0.656 noise=0.1893
+    Periods: aot=473.1d smog=495.4d resid=380.1d
+
+  Fold  3 complete (GPU 3) [MT] site=105103_48308 (n_train=1,881,310, n_test=1,834) [475.2min elapsed]
+    M=  256: R²_log=0.193 RMSE_log=0.4623 R²_orig=0.188 RMSE_orig=3.47 | epochs=50 train=1361.6s
+    M=  512: R²_log=0.121 RMSE_log=0.4823 R²_orig=0.140 RMSE_orig=3.57 | epochs=50 train=1538.2s
+    M= 1024: R²_log=-0.121 RMSE_log=0.5447 R²_orig=-0.009 RMSE_orig=3.87 | epochs=50 train=2360.4s
+    M= 2048: R²_log=-0.571 RMSE_log=0.6449 R²_orig=-0.347 RMSE_orig=4.47 | epochs=50 train=5272.6s
+    M= 4096: R²_log=-0.836 RMSE_log=0.6972 R²_orig=-0.449 RMSE_orig=4.64 | epochs=50 train=17462.6s
+    Params (M=4096): base=0.139 summer=0.490 winter=0.454 seasonal=0.647 noise=0.1895
+    Periods: aot=482.7d smog=501.0d resid=379.3d
+
+  Fold  4 complete (GPU 0) [MT] site=112501_46003 (n_train=1,878,233, n_test=4,911) [927.0min elapsed]
+    M=  256: R²_log=0.377 RMSE_log=0.5799 R²_orig=0.284 RMSE_orig=7.88 | epochs=50 train=1093.1s
+    M=  512: R²_log=0.307 RMSE_log=0.6112 R²_orig=0.244 RMSE_orig=8.10 | epochs=50 train=1285.1s
+    M= 1024: R²_log=0.359 RMSE_log=0.5879 R²_orig=0.254 RMSE_orig=8.05 | epochs=50 train=2218.7s
+    M= 2048: R²_log=0.345 RMSE_log=0.5944 R²_orig=0.275 RMSE_orig=7.93 | epochs=50 train=5213.6s
+    M= 4096: R²_log=0.311 RMSE_log=0.6096 R²_orig=0.337 RMSE_orig=7.58 | epochs=50 train=17426.7s
+    Params (M=4096): base=0.136 summer=0.504 winter=0.454 seasonal=0.656 noise=0.1895
+    Periods: aot=472.0d smog=503.4d resid=380.5d
+
+Total CV time: 55621.9s (927.0 min)
+
+======================================================================
+SVGP LOSO CV Results (Full CONUS, 5 sites, 4 GPUs)
+n_epochs=50, batch_size=32768, patience=15, lr=0.01
+======================================================================
+
+  M=256 inducing points:
+    Log scale:  RMSE=0.5390, MAE=0.4124, R²=0.5159
+    Orig scale: RMSE=6.67, MAE=3.75, R²=0.4280
+    Timing:     train=1299.89s, infer=0.029s, ip=19.66s (mean/fold)
+    Epochs:     mean=50.0
+
+  M=512 inducing points:
+    Log scale:  RMSE=0.5599, MAE=0.4290, R²=0.4776
+    Orig scale: RMSE=6.73, MAE=3.87, R²=0.4181
+    Timing:     train=1478.96s, infer=0.027s, ip=11.71s (mean/fold)
+    Epochs:     mean=50.0
+
+  M=1024 inducing points:
+    Log scale:  RMSE=0.5763, MAE=0.4366, R²=0.4466
+    Orig scale: RMSE=7.01, MAE=4.00, R²=0.3684
+    Timing:     train=2329.86s, infer=0.032s, ip=20.70s (mean/fold)
+    Epochs:     mean=50.0
+
+  M=2048 inducing points:
+    Log scale:  RMSE=0.5804, MAE=0.4375, R²=0.4387
+    Orig scale: RMSE=6.83, MAE=3.96, R²=0.4003
+    Timing:     train=5297.97s, infer=0.075s, ip=37.72s (mean/fold)
+    Epochs:     mean=50.0
+
+  M=4096 inducing points:
+    Log scale:  RMSE=0.5920, MAE=0.4461, R²=0.4159
+    Orig scale: RMSE=6.70, MAE=3.99, R²=0.4228
+    Timing:     train=17494.48s, infer=0.220s, ip=148.33s (mean/fold)
+    Epochs:     mean=50.0
+
+All results saved to runs/033026_1/
+  run_log.log, svgp_results.json, svgp_fold_losses.json
+  svgp_summary.csv, svgp_site_metrics.csv, svgp_fold_timings.csv, model_params.csv
+  svgp_predictions_M*.npz, loso_sites.csv
+Total wall time: 55621.9s (927.0 min)
